@@ -13,17 +13,17 @@
 
 
 -- Дамп структуры базы данных space_bot
-CREATE DATABASE IF NOT EXISTS `space_bot` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+CREATE DATABASE IF NOT EXISTS `space_bot` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `space_bot`;
 
 -- Дамп структуры для таблица space_bot.listplanet
 CREATE TABLE IF NOT EXISTS `listplanet` (
   `ID` int(11) NOT NULL,
-  `Planet` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Planet` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `img` text,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table with planets and their descriptions.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Table with planets and their descriptions.';
 
 -- Дамп данных таблицы space_bot.listplanet: ~37 rows (приблизительно)
 /*!40000 ALTER TABLE `listplanet` DISABLE KEYS */;

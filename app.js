@@ -1,24 +1,14 @@
-require('dotenv').config()
+require('dotenv').config();
+
+
 const {Telegraf, Extra} = require('telegraf');
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'borderradius59072',
-    database: 'planets_info'
-
-});
-
-connection.connect((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log("Mysql Starter...");
-});
-
 const Markup = require("telegraf/markup");
 const {resize} = require('telegraf/markup');
 const bot = new Telegraf(process.env.BOT_TOKEN);
+
+//mysql connections
+const connection = require('./src/db');
+
 bot.use(async (ctx, next) => {
     const start = new Date();
     await next();
@@ -41,13 +31,13 @@ find out information about different planets. If you have any questions /help is
 ) + ctx.replyWithVideo({source: "img/Start/tenor.gif"}));
 bot.help((ctx) => {
     ctx.reply(`Hello Galaxy Traveler,
-👩‍🚀! I am a space bot, if there is a desire to find out information about 
-the planets of the solar system or about exoplanets, then I will be happy to help! 🌌`) + ctx.replyWithPhoto({source: "img/Help/fon.jpg"})
+                    👩‍🚀! I am a space bot, if there is a desire to find out information about 
+                    the planets of the solar system or about exoplanets, then I will be happy to help! 🌌`) + ctx.replyWithPhoto({source: "img/Help/fon.jpg"})
 });
 bot.hears("The planets of the solar system", (ctx) => {
     let solarPlanets = [];
-    let sql = "SELECT Planet FROM listplanet LIMIT 8"
-    connection.query(sql, (err, result) => {
+
+    connection.query("SELECT Planet FROM listplanet LIMIT 8", (err, result) => {
         console.log(result);
         let index = 0;
         for (i = 0; i <= 2; i++) {
@@ -64,12 +54,10 @@ bot.hears("The planets of the solar system", (ctx) => {
 
         console.log(solarPlanets);
         ctx.reply(`Why Is It Called The "Solar" System?
-There are many planetary systems like ours in the universe, with planets orbiting a host star. Our planetary system is named 
-the "solar" system because our Sun is named Sol, after the Latin word for Sun, "solis," and anything related to the Sun we call "solar."
-The planets of the solar system`,
-            Markup.keyboard(
-                solarPlanets
-            )
+                        There are many planetary systems like ours in the universe, with planets orbiting a host star. Our planetary system is named 
+                        the "solar" system because our Sun is named Sol, after the Latin word for Sun, "solis," and anything related to the Sun we call "solar."
+                        The planets of the solar system`,
+            Markup.keyboard(solarPlanets)
                 .resize()
                 .extra()
         ) + ctx.replyWithPhoto({source: "img/SolarPlanets/solar_system.jpg"})
@@ -86,8 +74,7 @@ bot.hears("Back", (ctx) => ctx.reply("Home page:",
 ));
 bot.hears("Exoplanets", (ctx) => {
     let exoPlanets = [];
-    let sql = "SELECT Planet,MAX(ID) FROM listplanet GROUP BY Planet HAVING MAX(ID)>8"
-    connection.query(sql, (err, result) => {
+    connection.query("SELECT Planet,MAX(ID) FROM listplanet GROUP BY Planet HAVING MAX(ID) > 8", (err, result) => {
         console.log(result);
         let index = 0;
         for (i = 0; i <= 9; i++) {
@@ -111,8 +98,8 @@ bot.hears("Exoplanets", (ctx) => {
     })
 });
 bot.on("text", (ctx) => {
-    let sql = "SELECT * FROM listplanet WHERE Planet =" + connection.escape(ctx.message.text);
-    connection.query(sql, (err, result) => {
+
+    connection.query("SELECT * FROM listplanet WHERE Planet = ?", [ ctx.message.text ], (err, result) => {
         if (err) throw err;
         let planet = result[0];
         if (planet === undefined || planet === null)
@@ -121,11 +108,15 @@ bot.on("text", (ctx) => {
         ctx.reply(planet.Description) + ctx.replyWithPhoto({source: `img/${ planet.img }`});
     });
 });
-//сканер ошибок
+
+
+//Error handler
 bot.catch((err, ctx) => {
     console.log(`Ooops, encountered an error for ${ ctx.updateType }`, err);
-})
+});
+
 bot.start((ctx) => {
     throw new Error('Example error');
-})
+});
+
 bot.launch();
