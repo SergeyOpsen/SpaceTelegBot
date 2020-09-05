@@ -12,11 +12,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- Дамп структуры базы данных planets_info
-CREATE DATABASE IF NOT EXISTS `planets_info` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `planets_info`;
+-- Дамп структуры базы данных space_bot
+CREATE DATABASE IF NOT EXISTS `space_bot` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+USE `space_bot`;
 
--- Дамп структуры для таблица planets_info.listplanet
+-- Дамп структуры для таблица space_bot.listplanet
 CREATE TABLE IF NOT EXISTS `listplanet` (
   `ID` int(11) NOT NULL,
   `Planet` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `listplanet` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table with planets and their descriptions.';
 
--- Дамп данных таблицы planets_info.listplanet: ~37 rows (приблизительно)
+-- Дамп данных таблицы space_bot.listplanet: ~37 rows (приблизительно)
 /*!40000 ALTER TABLE `listplanet` DISABLE KEYS */;
 INSERT INTO `listplanet` (`ID`, `Planet`, `Description`, `img`) VALUES
 	(1, 'Mercury', 'It\'Mercury! \n\nMercury is the smallest and innermost planet in the Solar System. Its orbit around the Sun takes \n    87.97 days, the shortest of all the planets in the Solar System. It is named after the Greek god Hermes (Ερμής), \n    translated into Latin Mercurius Mercury, god of commerce, messenger of the gods, mediator between gods and mortals. \n    Like Venus, Mercury orbits the Sun within Earth\'s orbit as an inferior planet, and its apparent distance from the \n    Sun as viewed from Earth never exceeds 28°. This proximity to the Sun means the planet can only be seen near the western \n    horizon after sunset or eastern horizon before sunrise, usually in twilight. At this time, it may appear as a bright star-like object, \n    but is often far more difficult to observe than Venus. The planet telescopically displays the complete range of phases, similar to Venus and \n    the Moon, as it moves in its inner orbit \n    relative to Earth, which recurs over its synodic period of approximately 116 days.', 'SolarPlanets/planet1.jpg'),
